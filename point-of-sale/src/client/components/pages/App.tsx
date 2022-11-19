@@ -39,11 +39,14 @@ const App: FC<AppProps> & { getInitialProps(appContext: AppContext): Promise<App
     const network = WalletAdapterNetwork.Devnet;
 
     const wallets = useMemo(
-        () => (connectWallet ? [
-            new GlowWalletAdapter({ network }),
-            new PhantomWalletAdapter(),
-            new SolflareWalletAdapter({ network })
-        ] : []),
+        () =>
+            connectWallet
+                ? [
+                      new GlowWalletAdapter({ network }),
+                      new PhantomWalletAdapter(),
+                      new SolflareWalletAdapter({ network }),
+                  ]
+                : [],
         [connectWallet, network]
     );
 
@@ -106,7 +109,7 @@ App.getInitialProps = async (appContext) => {
     const recipient = query.recipient as string;
     const label = query.label as string;
     const message = query.message || undefined;
-    const host = req?.headers.host || 'localhost:3001';
+    const host = req?.headers.host || 'solana-pay-mauve.vercel.app';
 
     return {
         ...props,
